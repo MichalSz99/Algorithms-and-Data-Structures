@@ -1,10 +1,20 @@
 # Algorithms-and-Data-Structures
 Algorithms and Data Structures in Python and C++
 
+## Data Structure
+- Sorted Linked List
+- Binary Search Tree (BST)
+
+## Graph Algorithms
+- Prime's Algorithm
+- Dijkstra's Algorithm
+- Topological Sort
+- Algorithm finding Eulerian cycle
+- Algorithm finding Hamiltonian cycle
+
 ## Sorting Algorithms
-A few sorting algorithms in Python:
-** Heap Sort
-** Merge Sort
+- Heap Sort
+- Merge Sort
 - Insert Sort
 - Selection Sort
-- Quick Sort ( in 2 versions)
+- Quick Sort (iteration and recursive version)
