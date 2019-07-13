@@ -28,7 +28,7 @@ struct tree *insert(struct tree *root, int x) { //insert new element into tree
 	return(root);
 }
 
- struct tree *search(struct tree *root, int x) { // looking for new element in tree
+ struct tree *search(struct tree *root, int x) { // looking for element in tree
 	struct tree *ptr;
 	ptr=root;
 	while(ptr) {
@@ -47,7 +47,7 @@ void deleteTree(struct tree *root) { // deleting tree from memory
 	if(root != NULL) {
 		deleteTree(root->left);
 		deleteTree(root->right);
-		cout << root->info << " ";  //show elements as postorder
+		cout << root->info << " ";  //show elements in postorder
 		free(root);
 	}
 
@@ -78,7 +78,7 @@ int height (struct tree *root)
         }
 }
 
-void preorder(struct tree *root) { //show elements as preorder
+void preorder(struct tree *root) { //show elements in preorder
 	if(root != NULL) {
 		cout << root->info << " ";
 		preorder(root->left);
@@ -86,7 +86,7 @@ void preorder(struct tree *root) { //show elements as preorder
 	}
 }
 
-void inorder(struct tree *root) { //show elements as inorder
+void inorder(struct tree *root) { //show elements in inorder
 	if(root != NULL) {
 		inorder(root->left);
 		cout << root->info << " ";
@@ -101,8 +101,8 @@ int main(){
     tree_in.open("dane.txt", ios::in);
     while (tree_in>>x && !tree_in.eof() )
             	 BST = insert(BST,x);
-
     tree_in.close();
+	
     x = height(BST);
     cout << "Height of BST: " << x <<endl;
     x = max(BST);
