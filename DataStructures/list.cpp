@@ -1,82 +1,115 @@
-#include <cstdio>
-#include <cstdlib>
 #include <iostream>
 #include <fstream>
 
 using namespace std;
 
-struct list{ //definition of elements of list
-	int key;
-	struct list *next;
-};
-
-struct list *insert(struct list *start, int x) { //insert elements into list
-
-	struct list *newList = (struct list*)malloc(sizeof(struct list));
-    newList->key = x;
-    newList->next = NULL;
-
-	if(!start) {
-		start=newList;
-		return start;
-	}
-
-    if (start -> key > x)
+    class List
     {
-        newList ->next = start;
-        start = newList;
-        return start;
-    }
+    private:
+        struct Node {
+            int val;
+            Node *next;
+        };
 
-    struct list *currentList = start;
-    struct list *nextList  = start->next;
-	while(nextList !=NULL && nextList->key < x)
-	      {
-	          currentList = nextList;
-	          nextList = nextList -> next;
-	      }
-	newList ->next = nextList;
-	currentList -> next = newList;
-
-	return start;
-}
-
-void deleteList(struct list *start) { //deleting list
-    struct list *currentList = start;
-    while(currentList != NULL)
-	{
-	    start = currentList -> next;
-	    cout << currentList->key << " ";
-	    free(currentList);
-	    currentList = start;
-	}
-
-}
-
-struct list *search(struct list *start, int x) {
-
-	struct list *currentList = start;
-	while(currentList !=NULL && currentList->key != x)
-	      {
-	          currentList = currentList ->next;
-	      }
-	return(currentList);
-}
+        Node* firstNode;
 
 
-int main ()
-{
+        void show(Node* node) {
+            if(node != nullptr) {
+                cout << node->val << " ";
+                show(node->next);
+            }
+        }
 
-    fstream list_in;
-	int x;
-	struct list *List = NULL;
-    list_in.open("dane.txt", ios::in);
-    while (list_in>>x && !list_in.eof() )
-            	 List = insert(List,x);
+        int length (Node* node){
+            if(node == nullptr)
+                return 0;
+            else
+               return length(node->next) + 1;
+        }
 
-    list_in.close();
-    cout << endl <<"All elements in list: ";
-    deleteList(List);
-    return 0;
+        Node* deleteList() {
+            Node *currentNode = firstNode;
+            while(currentNode != nullptr)
+            {
+                firstNode = currentNode -> next;
+                free(currentNode);
+                currentNode = firstNode;
+            }
+            return nullptr;
+        }
 
+
+    public:
+        List(){
+            firstNode = nullptr;
+        }
+
+        ~List()
+        {
+            firstNode = deleteList();
+        }
+
+        void insert(int x) {
+            Node* newNode = new Node;
+            newNode->val = x;
+            newNode->next = nullptr;
+            if (firstNode == nullptr)
+                firstNode = newNode;
+            else if (firstNode->val > x) {
+                newNode->next = firstNode;
+                firstNode = newNode;
+            } else {
+                Node *currentNode = firstNode;
+                Node *nextNode = firstNode->next;
+                while (nextNode != nullptr && nextNode->val < x) {
+                    currentNode = nextNode;
+                    nextNode = nextNode->next;
+                }
+                newNode->next = nextNode;
+                currentNode->next = newNode;
+            }
+        }
+
+        Node* search(int x) {
+            Node *currentNode = firstNode;
+            while(currentNode != nullptr && currentNode->val != x)
+                currentNode = currentNode ->next;
+            return currentNode;
+        }
+
+        int max ()
+        {
+            Node* node = firstNode;
+            int n = firstNode->val;
+            while(node->next != nullptr)
+                node  = node -> next;
+            return node->val;
+        }
+
+
+        void show() {
+            show(firstNode);
+        }
+
+        int length(){
+            return length(firstNode);
+        }
+    };
+
+
+    int main() {
+        ifstream in;
+        int x;
+        List list;
+        in.open("data.txt");
+        while (in >> x && !in.eof())
+            list.insert(x);
+        in.close();
+        cout << "The biggest element: "<< list.max() << endl;
+        cout << "Next value after 21 is "<< list.search(21)->next->val << endl;
+        cout << "Length of list is "<< list.length() << endl;
+        cout << "All elements  ";
+        list.show();
+        return 0;
 }
