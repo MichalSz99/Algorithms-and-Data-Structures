@@ -3,116 +3,159 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std;
+    using namespace std;
 
-struct tree { //definition of vertex of tree
-	int info;
-	struct tree *left;
-	struct tree *right;
-};
+    class BST
+    {
+    private:
+        struct Node { //definition of vertex of tree
+            int val;
+            Node *left;
+            Node *right;
+        };
 
-struct tree *insert(struct tree *root, int x) { //insert new element into tree
-	if(!root) {
-		root=(struct tree*)malloc(sizeof(struct tree));
-		root->info = x;
-		root->left = NULL;
-		root->right = NULL;
-		return(root);
-	}
-	if(root->info > x)
-	     root->left = insert(root->left,x);
-	else {
-		if(root->info < x)
-			root->right = insert(root->right,x);
-	}
-	return(root);
-}
-
- struct tree *search(struct tree *root, int x) { // looking for element in tree
-	struct tree *ptr;
-	ptr=root;
-	while(ptr) {
-		if(x>ptr->info)
-		     ptr=ptr->right;
-		else if(x<ptr->info)
-		     ptr=ptr->left;
-		else
-		    break;
-	}
-	return ptr;
- }
+        Node* root;
 
 
-void deleteTree(struct tree *root) { // deleting tree from memory
-	if(root != NULL) {
-		deleteTree(root->left);
-		deleteTree(root->right);
-		cout << root->info << " ";  //show elements in postorder
-		free(root);
-	}
-
-}
-
-int max (struct tree *root) //looking for the biggest element in tree
-{
-    struct tree *BST = root;
-    int n = root ->info;
-    while(BST ->right != NULL) {
-		BST  = BST -> right;
-		n = BST -> info;
-	}
-	return n;
-}
-
-int height (struct tree *root)
-{
-	if(root == NULL)
-        return 0;
-    else{
-		int maxL = height(root->left);
-		int maxR = height(root->right);
-		if (maxL > maxR)
-            return maxL + 1;
-        else
-            return maxR + 1;
+        Node* insert(Node *node, int x) {
+            if (node == nullptr) {
+                node = new Node;
+                node->val = x;
+                node->left = nullptr;
+                node->right = nullptr;
+            }
+            else if (node->val > x)
+                node->left = insert(node->left, x);
+            else {
+                if (node->val < x)
+                    node->right = insert(node->right, x);
+            }
+            return node;
         }
-}
 
-void preorder(struct tree *root) { //show elements in preorder
-	if(root != NULL) {
-		cout << root->info << " ";
-		preorder(root->left);
-		preorder(root->right);
-	}
-}
+        void preorder(Node* node) { //show elements in preorder
+            if(node != nullptr) {
+                cout << node->val << " ";
+                preorder(node->left);
+                preorder(node->right);
+            }
+        }
 
-void inorder(struct tree *root) { //show elements in inorder
-	if(root != NULL) {
-		inorder(root->left);
-		cout << root->info << " ";
-		inorder(root->right);
-	}
-}
-int main(){
+        void inorder(Node* node) { //show elements in inorder
+            if(node != nullptr) {
+                inorder(node->left);
+                cout << node->val << " ";
+                inorder(node->right);
+            }
+        }
 
-    fstream tree_in;
-    int x;
-    struct tree *BST = NULL;
-    tree_in.open("dane.txt", ios::in);
-    while (tree_in>>x && !tree_in.eof() )
-            	 BST = insert(BST,x);
-    tree_in.close();
-	
-    x = height(BST);
-    cout << "Height of BST: " << x <<endl;
-    x = max(BST);
-    cout << "The biggest element: " << x <<endl;
-    cout << "Preorder: ";
-    preorder(BST);
-    cout << endl <<"Inorder: ";
-    inorder(BST);
-    cout << endl <<"Preorder: ";
-    deleteTree(BST);
-    return 0;
-}
+        void postorder(Node* node) { //show elements in inorder
+            if(node != nullptr) {
+                postorder(node->left);
+                postorder(node->right);
+                cout << node->val << " ";
+            }
+        }
 
+
+        int height (Node* node){
+            if(node == nullptr)
+                return 0;
+            else{
+                int maxL = height(node->left);
+                int maxR = height(node->right);
+                if (maxL > maxR)
+                    return maxL + 1;
+                else
+                    return maxR + 1;
+            }
+        }
+
+        Node* deleteTree(Node *node) {
+            if (node != nullptr) {
+                deleteTree(node->left);
+                deleteTree(node->right);
+                delete node;
+            }
+            return nullptr;
+        }
+
+    public:
+        BST(){
+            root = nullptr;
+        }
+
+        ~BST()
+        {
+            root = deleteTree(root);
+        }
+
+        void insert(int x){
+            root = insert(root,x);
+        }
+
+        Node* search(int x) {
+            Node* ptr = root;
+            while(ptr != nullptr) {
+                if(x > ptr->val)
+                    ptr = ptr->right;
+                else if(x < ptr->val)
+                    ptr = ptr->left;
+                else
+                    break;
+            }
+            return ptr;
+        }
+
+        int max ()
+        {
+            Node* node = root;
+            int n = root->val;
+            while(node->right != nullptr) {
+                node  = node -> right;
+                n = node -> val;
+            }
+            return n;
+        }
+
+        int height ()
+        {
+            return height(root);
+        }
+
+        void preorder() {
+            preorder(root);
+        }
+
+        void inorder() {
+            inorder(root);
+        }
+
+        void postorder() {
+            postorder(root);
+        }
+
+    };
+
+
+    int main() {
+
+        ifstream tree_in;
+        int x;
+        BST tree;
+        tree_in.open("data.txt");
+        while (tree_in >> x && !tree_in.eof())
+            tree.insert(x);
+        tree_in.close();
+        cout << "Height of BST: " << tree.height() << endl;
+        cout << "The biggest element: " << tree.max() << endl;
+        cout << "Preorder: ";
+        tree.preorder();
+        cout << endl << "Inorder: ";
+        tree.inorder();
+        cout << endl << "Postorder: ";
+        tree.postorder();
+        cout<< endl << "Right child of 17 is "<<tree.search(17)->right->val;
+
+        return 0;
+}
