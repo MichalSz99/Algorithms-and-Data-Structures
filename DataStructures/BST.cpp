@@ -134,13 +134,13 @@ class BST
 };
 
     int main() {
-        ifstream tree_in;
+        ifstream in;
         int x;
         BST tree;
-        tree_in.open("data.txt");
-        while (tree_in >> x && !tree_in.eof())
+        in.open("data.txt");
+        while (in >> x && !in.eof())
             tree.insert(x);
-        tree_in.close();
+        in.close();
         cout << "Height of BST: " << tree.height() << endl;
         cout << "The biggest element: " << tree.max() << endl;
         cout << "Preorder: ";
