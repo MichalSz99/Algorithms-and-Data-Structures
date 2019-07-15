@@ -6,7 +6,7 @@ using namespace std;
 class BST
 {
     private:
-        struct Node { //definition of vertex of tree
+        struct Node { 
             int val;
             Node *left;
             Node *right;
@@ -31,7 +31,7 @@ class BST
             return node;
         }
 
-        void preorder(Node* node) { //show elements in preorder
+        void preorder(Node* node) { 
             if(node != nullptr) {
                 cout << node->val << " ";
                 preorder(node->left);
@@ -39,7 +39,7 @@ class BST
             }
         }
 
-        void inorder(Node* node) { //show elements in inorder
+        void inorder(Node* node) {
             if(node != nullptr) {
                 inorder(node->left);
                 cout << node->val << " ";
@@ -47,14 +47,13 @@ class BST
             }
         }
 
-        void postorder(Node* node) { //show elements in inorder
+        void postorder(Node* node) { 
             if(node != nullptr) {
                 postorder(node->left);
                 postorder(node->right);
                 cout << node->val << " ";
             }
         }
-
 
         int height (Node* node){
             if(node == nullptr)
@@ -134,9 +133,7 @@ class BST
         }
 };
 
-
     int main() {
-
         ifstream tree_in;
         int x;
         BST tree;
@@ -153,6 +150,5 @@ class BST
         cout << endl << "Postorder: ";
         tree.postorder();
         cout<< endl << "Right child of 17 is "<<tree.search(17)->right->val;
-
         return 0;
 }
