@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 
-    using namespace std;
+using namespace std;
 
-    class BST
-    {
+class BST
+{
     private:
         struct Node { //definition of vertex of tree
             int val;
@@ -132,8 +132,7 @@
         void postorder() {
             postorder(root);
         }
-
-    };
+};
 
 
     int main() {
