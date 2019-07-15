@@ -67,6 +67,13 @@ void deleteList(struct list *firstNode) {
     }
 }
 
+int length (struct list* node){
+    if(node == NULL)
+        return 0;
+    else
+        return length(node->next) + 1;
+}
+
 int main(){
     FILE *in = fopen("data.txt", "r");
     int x;
@@ -75,7 +82,8 @@ int main(){
         List = insert(List, x);
     fclose(in);
     printf("The biggest element: %d \n", max(List));
-    printf("Right child of 17 is %d \n", search(List,17)->next->val);
+    printf("Next value after 21 is %d \n", search(List,21)->next->val);
+    printf("Length of list is %d \n", length(List));
     printf("All elements: ");
     show(List);
     deleteList(List);
