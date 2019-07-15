@@ -79,6 +79,4 @@ int main(){
     printf("All elements: ");
     show(List);
     deleteList(List);
-
-
 }
