@@ -68,14 +68,6 @@ class Tree:
             maxR = self.right.height()
         return max(maxL, maxR)+1
 
-    def search(self, x):
-        if x == self.val:
-            return self
-        elif x > self.val:
-            return self.right.search(x)
-        else:
-            return self.left.search(x)
-
     def max(self):
         if not (self.right is None):
             return self.right.max()
