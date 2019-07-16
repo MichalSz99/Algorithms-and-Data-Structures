@@ -60,12 +60,12 @@ class GraphMatrix:
             if full == 1:
                 return i
 
-    def _TS(self, visited, sort, v):  # Topological Sort
-        visited[v] = 1
-        for i in range(len(self.matrix)):
-            if visited[i] == 0 and self.matrix[v][i] != 0:
+    def _TS(self, visited, sort, currentVertex): 
+        visited[currentVertex] = 1
+        for i in range(self.vertex):
+            if visited[i] == 0 and self.matrix[currentVertex][i] != 0:
                 self._TS(visited, sort, i)
-        sort.insert(0, v)
+        sort.insert(0, currentVertex)
 
     def TS(self):
         start = self.start()
