@@ -23,7 +23,7 @@ public:
         delete right;
     }
 
-    Node* insert(int value) {
+    void insert(int value) {
         if (value < val)
             if (left == nullptr)
                 left = new Node(value);
@@ -34,7 +34,6 @@ public:
                 right = new Node(value);
             else
                 right->insert(value);
-        return this;
     }
 
     Node* search(int x) {
@@ -87,7 +86,7 @@ public:
     int max()
     {
         if(right != nullptr)
-            return right->height();
+            return right->max();
         else
             return val;
     }
@@ -103,7 +102,7 @@ int main() {
     int x;
     Node *tree = nullptr;
     in.open("data.txt");
-    while (in >> x && !in.eof())
+    while (in >> x)
         if (tree == nullptr)
             tree = new Node(x);
         else
