@@ -69,7 +69,7 @@ class GraphMatrix:
 
     def TS(self):
         start = self.start()
-        visited = [0] * len(self.matrix)
+        visited = [0] * self.vertex
         sort = []
         self._TS(visited, sort, start)
         return sort
