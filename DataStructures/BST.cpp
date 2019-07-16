@@ -58,17 +58,17 @@ public:
 
     void inorder() {
         if(left != nullptr)
-            left->preorder();
+            left->inorder();
         cout << val << " ";
         if(right != nullptr)
-            right->preorder();
+            right->inorder();
     }
 
     void postorder() {
         if(left != nullptr)
-            left->preorder();
+            left->postorder();
         if(right != nullptr)
-            right->preorder();
+            right->postorder();
         cout << val << " ";
     }
 
@@ -119,5 +119,6 @@ int main() {
     cout << endl << "Postorder: ";
     tree->postorder();
     cout<< endl<<tree->search(17)->getValue();
+    delete tree;
     return 0;
 }
