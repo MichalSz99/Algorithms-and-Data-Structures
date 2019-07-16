@@ -33,11 +33,13 @@ struct list *insert(struct list *firstNode, int x) {
 }
 
 struct list *search(struct list *firstNode, int x) {
-
     struct list *currentNode = firstNode;
-    while(currentNode != NULL && currentNode->val != x)
+    while(currentNode != NULL && currentNode->val < x)
         currentNode = currentNode ->next;
-    return currentNode;
+    if (currentNode == NULL || currentNode->val != x)
+        return NULL;
+    else
+        return currentNode;
 }
 
 void show(struct list *firstNode) {
