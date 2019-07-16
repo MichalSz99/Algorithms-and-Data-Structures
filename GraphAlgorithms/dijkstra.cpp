@@ -7,81 +7,106 @@ using namespace std;
 
 class Edge
 {
-public:
+private:
+    friend class Graph;
     int successor;
     int weight;
-    Edge(int x = -1, int weight = INT_MAX){
-        this -> successor = x ;
-        this -> weight = weight;
+
+    Edge(int x, int w){
+       successor = x ;
+       weight = w;
     }
+
+public:
     bool operator > (const Edge &e) const
     {
         return (weight > e.weight);
     }
 };
 
+class Graph
+{
+
+private:
+    int vertex;
+    vector<vector<Edge> > graph;
+
+public:
+    Graph(int v){
+        vertex = v;
+        graph.resize(vertex);
+    }
+
+    void addEdge(int vertexA, int vertexB, int value){
+        graph[vertexA].push_back(Edge(vertexB,value));  //  if you want to use that program for directed graph
+        graph[vertexB].push_back(Edge(vertexA,value)); //<- you must comment/delete that line
+    }
+
+    void Dijkstra(int start){
+        int distance [vertex];
+        bool check [vertex];
+        for (int i=0;i<vertex;i++)
+        {
+            check[i]= false;
+            distance[i]=INT_MAX;
+        }
+        distance[start]=0;
+        priority_queue<vector <Edge>, vector <Edge>, greater<> > queuePrio;
+        queuePrio.push(Edge(start,0));
+        int currentVertex;
+        while(!queuePrio.empty())
+        {
+            while(true)
+            {
+                if(queuePrio.empty())
+                    break;
+
+                currentVertex =  queuePrio.top().successor;
+
+                if(check[currentVertex]==1)
+                    queuePrio.pop();
+                else
+                    break;
+            }
+            if(queuePrio.empty())
+                break;
+
+            queuePrio.pop();
+            check[currentVertex] = true;
+
+            for(int i=0; i<graph[currentVertex].size(); i++)
+            {
+               int currentSuccessor = graph[currentVertex][i].successor;
+               int currentDistance = distance[graph[currentVertex][i].successor];
+               int newDistance = distance[currentVertex]+ graph[currentVertex][i].weight;
+                if( newDistance < currentDistance)
+                {
+                    distance[currentSuccessor] = newDistance;
+                    queuePrio.push(Edge(currentSuccessor, newDistance));
+                }
+            }
+        }
+
+        cout << "The shortest path from " << start<<endl;
+        for (int i=0;i<vertex;i++)
+        {
+            cout << "to " << i<< " equals "<< distance[i]<<endl;
+        }
+    }
+
+};
+
 int main()
 {
-    ifstream in ("data.txt");
-    vector<vector<Edge> > graph;
-    int vertices,start,a,b,c;
-
-    in>> vertices; // number of verticies
-    in>> start;    // start of paths
-
-    int distance [vertices];
-    bool check [vertices];
-    graph.resize(vertices);
-    for (int i=0;i<vertices;i++)
+    ifstream in ("dataDijkstra.txt");
+    int v,start,vA,vB,val;
+    in >> v; // number of verticies
+    in >> start;    // start of paths
+    Graph graph= Graph(v);
+    while (in>> vA >> vB >> val) // edge between a and b with value c
     {
-        check[i]=0;
-        distance[i]=INT_MAX;
+        graph.addEdge(vA,vB, val);
     }
-
-    while (in>> a>>b>>c) // undirected edge between a and b with value c
-    {
-        graph[a].push_back(Edge(b,c));
-                                       //   if you want to use that program for directed graph
-        graph[b].push_back(Edge(a,c)); //<- you must comment/delete that line
-    }
-    priority_queue<vector <Edge>, vector <Edge>, greater<Edge> > queuePrio;
-    distance[start]=0;
-    queuePrio.push(Edge(start,0));
-    int x;
-    while(!queuePrio.empty())
-    {
-    	while(true)
-    	{
-    	if(queuePrio.empty())
-            break;
-
-    	 x=queuePrio.top().successor;
-
-    	 if(check[x]==1)
-            queuePrio.pop();
-    	 else
-            break;
-    	}
-      if(queuePrio.empty())
-    	break;
-
-    queuePrio.pop();
-    check[x]=1;
-
-      for(int i=0;i<graph[x].size();i++)
-      {
-          if(distance[graph[x][i].successor]> (distance[x]+ graph[x][i].weight))
-          {
-             distance[graph[x][i].successor]=distance[x]+graph[x][i].weight;
-             queuePrio.push(Edge(graph[x][i].successor, distance[graph[x][i].successor]));
-          }
-      }
-    }
-
-    cout << "The shortest path from " << start<<endl;
-    for (int i=0;i<vertices;i++)
-    {
-        cout << "to " << i<< " equals "<< distance[i]<<endl;
-    }
+    graph.Dijkstra(0);
     return 0;
 }
