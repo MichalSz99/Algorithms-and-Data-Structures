@@ -98,7 +98,7 @@ public:
 
 int main()
 {
-    ifstream in ("dataDijkstra.txt");
+    ifstream in ("DijkstraData.txt");
     int v,start,vA,vB,val;
     in >> v; // number of verticies
     in >> start;    // start of paths
