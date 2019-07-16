@@ -81,8 +81,7 @@ class Tree:
             return self.right.max()
         return self.val
 
-
-
+    
 BST = Tree()
 with open("data.txt") as input:
     data = input.read().splitlines()
