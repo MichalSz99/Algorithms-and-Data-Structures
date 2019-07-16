@@ -3,113 +3,94 @@
 
 using namespace std;
 
-    class List
+class Node
+{
+private:
+    int val;
+    Node *next;
+
+public:
+    Node(int value){
+        next = nullptr;
+        val = value;
+    }
+
+    ~Node()
     {
-    private:
-        struct Node {
-            int val;
-            Node *next;
-        };
+        delete next;
+    }
 
-        Node* firstNode;
-
-
-        void show(Node* node) {
-            if(node != nullptr) {
-                cout << node->val << " ";
-                show(node->next);
+    Node* insert(int x) {
+        Node* newNode = new Node(x);
+        if (val > x) {
+            newNode->next = this;
+            return newNode;
+        } else {
+            Node *currentNode = this;
+            Node *nextNode = this->next;
+            while (nextNode != nullptr && nextNode->val < x) {
+                currentNode = nextNode;
+                nextNode = nextNode->next;
             }
-        }
+            newNode->next = nextNode;
+            currentNode->next = newNode;
 
-        int length (Node* node){
-            if(node == nullptr)
-                return 0;
-            else
-               return length(node->next) + 1;
+            return this;
         }
+    }
 
-        Node* deleteList() {
-            Node *currentNode = firstNode;
-            while(currentNode != nullptr)
-            {
-                firstNode = currentNode -> next;
-                free(currentNode);
-                currentNode = firstNode;
-            }
+    Node* search(int x) {
+        if (val == x)
+            return this;
+        else if (x > val)
+            next->search(x);
+        else
             return nullptr;
-        }
+    }
 
+    void show() {
+        cout << val << " ";
+        if(next != nullptr)
+            next->show();
+    }
 
-    public:
-        List(){
-            firstNode = nullptr;
-        }
+    int length (){
+        if(next != nullptr)
+            return next->length() + 1;
+        else
+            return 1;
+    }
 
-        ~List()
-        {
-            firstNode = deleteList();
-        }
+    int max()
+    {
+        if(next != nullptr)
+            return next->max();
+        else
+            return val;
+    }
 
-        void insert(int x) {
-            Node* newNode = new Node;
-            newNode->val = x;
-            newNode->next = nullptr;
-            if (firstNode == nullptr)
-                firstNode = newNode;
-            else if (firstNode->val > x) {
-                newNode->next = firstNode;
-                firstNode = newNode;
-            } else {
-                Node *currentNode = firstNode;
-                Node *nextNode = firstNode->next;
-                while (nextNode != nullptr && nextNode->val < x) {
-                    currentNode = nextNode;
-                    nextNode = nextNode->next;
-                }
-                newNode->next = nextNode;
-                currentNode->next = newNode;
-            }
-        }
+    int getValue() {
+        return val;
+    }
 
-        Node* search(int x) {
-            Node *currentNode = firstNode;
-            while(currentNode != nullptr && currentNode->val != x)
-                currentNode = currentNode ->next;
-            return currentNode;
-        }
+};
 
-        int max ()
-        {
-            Node* node = firstNode;
-            int n = firstNode->val;
-            while(node->next != nullptr)
-                node  = node -> next;
-            return node->val;
-        }
-
-
-        void show() {
-            show(firstNode);
-        }
-
-        int length(){
-            return length(firstNode);
-        }
-    };
-
-
-    int main() {
-        ifstream in;
-        int x;
-        List list;
-        in.open("data.txt");
-        while (in >> x && !in.eof())
-            list.insert(x);
-        in.close();
-        cout << "The biggest element: "<< list.max() << endl;
-        cout << "Next value after 21 is "<< list.search(21)->next->val << endl;
-        cout << "Length of list is "<< list.length() << endl;
-        cout << "All elements  ";
-        list.show();
-        return 0;
+int main() {
+    ifstream in;
+    int x;
+    Node* list = nullptr;
+    in.open("data.txt");
+    while (in >> x)
+        if (list == nullptr)
+            list = new Node(x);
+        else
+            list = list->insert(x);
+    in.close();
+    cout << "The greatest element: "<< list->max() << endl;
+    cout <<  list->search(21)->getValue() << endl;
+    cout << "Length of list is "<< list->length() << endl;
+    cout << "All elements  ";
+    list->show();
+    delete list;
+    return 0;
 }
