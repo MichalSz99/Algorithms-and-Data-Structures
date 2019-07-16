@@ -98,7 +98,6 @@ public:
 
 };
 
-
 int main() {
     ifstream in;
     int x;
@@ -111,7 +110,7 @@ int main() {
             tree->insert(x);
     in.close();
     cout << "Height of BST: " << tree->height() << endl;
-    cout << "The biggest element: " << tree->max() << endl;
+    cout << "The greatest element: " << tree->max() << endl;
     cout << "Preorder: ";
     tree->preorder();
     cout << endl << "Inorder: ";
