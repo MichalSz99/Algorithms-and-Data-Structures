@@ -4,6 +4,13 @@ class Tree:
         self.right = None
         self.val = val
 
+    def __del__(self):
+        if not (self.left is None):
+            del self.left
+        if not (self.right is None):
+            del self.right
+        print("Delete " + str(self.val));
+
     def insert(self, val):
         if self.val is None:
             self.val = val
@@ -74,13 +81,7 @@ class Tree:
             return self.right.max()
         return self.val
 
-    def deleteTree(self):
-        if not (self.left is None):
-            self.left.deleteTree()
-        if not (self.right is None):
-            self.right.deleteTree()
-        del self
-        return None
+
 
 BST = Tree()
 with open("data.txt") as input:
@@ -96,4 +97,4 @@ BST.inorder()
 print("Postorder: ")
 BST.postorder()
 print("Right child of 17 is " + str(BST.search(17).right.val))
-BST.deleteTree()
+
