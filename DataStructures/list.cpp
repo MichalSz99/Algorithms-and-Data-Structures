@@ -40,12 +40,13 @@ public:
     }
 
     Node* search(int x) {
-        if (val == x)
-            return this;
-        else if (x > val)
-            next->search(x);
-        else
+        Node* currentNode = this;
+        while (currentNode != nullptr && currentNode-> val <x)
+            currentNode = currentNode->next;
+        if (currentNode == nullptr || currentNode->val != x)
             return nullptr;
+        else
+            return currentNode;
     }
 
     void show() {
