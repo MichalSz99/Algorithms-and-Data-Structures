@@ -3,8 +3,6 @@
 
 using namespace std;
 
-
-
 class Node
 {
 private:
@@ -99,7 +97,6 @@ public:
     }
 
 };
-
 
 
 int main() {
