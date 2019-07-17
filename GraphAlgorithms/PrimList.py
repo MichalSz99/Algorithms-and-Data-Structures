@@ -29,7 +29,7 @@ class Edge:
         return out
 
 
-class GraphL:
+class Graph:
 
     def __init__(self, vertex):
         self.vertex = vertex
@@ -110,7 +110,7 @@ class GraphL:
         return outEdge
 
 
-graphL = GraphL(10)
+graphL = Graph(10)
 graphL.randomFill(70, 1, 1000)
 graphL.fromFile("PrimData.txt")
 print(graphL)
