@@ -43,11 +43,19 @@ class GraphM:
 
     def randomFill(self, density, valueMin, valueMax):
         self.clear()
-        for i in range(self.vertex):
-            for j in range(i + 1, self.vertex):
-                if random.random() < (density / 100):
-                    self.matrix[i][j] = random.randint(valueMin, valueMax)
-                    self.matrix[j][i] = self.matrix[i][j]
+        self.clear()
+        MAXedge = round(self.vertex * (self.vertex - 1) * (density / 100))
+        print(MAXedge)
+        count = 0
+        while count < MAXedge:
+            value = random.randint(valueMin, valueMax)
+            predecessor = random.randint(0, self.vertex - 1)
+            successor = random.randint(0, self.vertex - 1)
+            if self.matrix[predecessor][successor] != 0 or predecessor == successor:
+                continue
+            self.matrix[predecessor][successor] = value
+            self.matrix[successor][predecessor] = value
+            count += 2
 
     def fromFile(self, fileName):
         self.clear()
@@ -88,7 +96,7 @@ class GraphM:
 
 
 graphM = GraphM(10)
-graphM.randomFill(50, 1, 1000)
+graphM.randomFill(70, 1, 1000)
 graphM.fromFile("PrimData.txt")
 print(graphM)
 print("\n")
