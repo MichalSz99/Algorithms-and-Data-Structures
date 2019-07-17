@@ -50,7 +50,7 @@ class GraphMatrix:
             successor = int(vertex[i+1])
             self.matrix[predecessor][successor] = 1
 
-    def start(self):
+    def __start(self):
         for i in range(len(self.matrix)):
             full = True
             for j in range(len(self.matrix)):
@@ -60,18 +60,18 @@ class GraphMatrix:
             if full:
                 return i
 
-    def _TS(self, visited, sort, currentVertex): 
+    def __TS(self, visited, sort, currentVertex): 
         visited[currentVertex] = 1
         for i in range(self.vertex):
             if visited[i] == 0 and self.matrix[currentVertex][i] != 0:
-                self._TS(visited, sort, i)
+                self.__TS(visited, sort, i)
         sort.insert(0, currentVertex)
 
     def TS(self):
-        start = self.start()
+        start = self.__start()
         visited = [0] * self.vertex
         sort = []
-        self._TS(visited, sort, start)
+        self.__TS(visited, sort, start)
         return sort
 
 
