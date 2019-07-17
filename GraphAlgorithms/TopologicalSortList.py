@@ -56,7 +56,7 @@ class GraphList:
             successor = int(vertex[i+1])
             self.list[predecessor].append(successor)
 
-    def start(self):
+    def __start(self):
         for i in range(self.vertex):
             full = True
             for j in range(self.vertex):
@@ -66,7 +66,7 @@ class GraphList:
             if full:
                 return i
 
-    def _TS(self, visited, sort, vertex):  # Topological Sort
+    def __TS(self, visited, sort, vertex):  # Topological Sort
         visited[vertex] = 1
         for i in range(len(self.list[vertex])):
             if visited[self.list[vertex][i]] == 0:
