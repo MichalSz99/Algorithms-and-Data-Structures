@@ -2,7 +2,7 @@ import random
 import re
 
 
-class GraphMatrix:
+class Graph:
 
     def __init__(self, vertex):
         self.vertex = vertex
@@ -75,8 +75,8 @@ class GraphMatrix:
         return sort
 
 
-graphM = GraphMatrix(10)
-graphM.randomFill(70)
-graphM.fromFile("TopologicalSortData.txt")
-print(graphM)
-print(graphM.TS())
+graph = Graph(10)
+graph.randomFill(70)
+graph.fromFile("TopologicalSortData.txt")
+print(graph)
+print(graph.TS())
