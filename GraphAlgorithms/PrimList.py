@@ -123,3 +123,5 @@ print("\n")
 out = graph.prim(0)
 for i in out:
     print(i)
+
+    
