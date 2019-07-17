@@ -77,6 +77,6 @@ class GraphMatrix:
 
 graphM = GraphMatrix(10)
 graphM.randomFill(70)
-graphM.fromFile("data.txt")
+graphM.fromFile("TopologicalSortData.txt")
 print(graphM)
 print(graphM.TS())
