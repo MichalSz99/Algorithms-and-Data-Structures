@@ -13,7 +13,7 @@ class Graph:
 
     def __str__(self):
         out = ""
-        for i in range(len(self.matrix)):
+        for i in range(self.vertex):
             pom = ""
             for j in range(len(self.matrix)):
                 pom = pom + str(self.matrix[i][j]) + " "
