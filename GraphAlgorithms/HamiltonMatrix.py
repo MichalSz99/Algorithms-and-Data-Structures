@@ -33,7 +33,7 @@ class Graph:
             self.matrix[i + 1][i] = 1
         self.matrix[0][self.vertex - 1] = 1
         self.matrix[self.vertex - 1][0] = 1
-        count = 0
+        count = 2 * self.vertex 
         while count < MAXedge:
             x = random.randint(0, self.vertex - 1)
             y = random.randint(0, self.vertex - 1)
