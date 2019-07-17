@@ -52,12 +52,12 @@ class GraphMatrix:
 
     def start(self):
         for i in range(len(self.matrix)):
-            full = 1
+            full = True
             for j in range(len(self.matrix)):
                 if self.matrix[j][i] == 1:
-                    full = 0
+                    full = False
                     break
-            if full == 1:
+            if full:
                 return i
 
     def _TS(self, visited, sort, currentVertex): 
