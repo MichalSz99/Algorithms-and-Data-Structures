@@ -92,7 +92,7 @@ class Graph:
 
 graph = Graph(10)
 graph.randomFill(70)
-graph.fromFile("data.txt")
+graph.fromFile("EulerData.txt")
 print(graph)
 print("\n")
 print(graph.Euler(0))
