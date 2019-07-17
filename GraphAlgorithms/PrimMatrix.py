@@ -89,7 +89,7 @@ class GraphM:
 
 graphM = GraphM(10)
 graphM.randomFill(50, 1, 1000)
-graphM.fromFile("primData.txt")
+graphM.fromFile("PrimData.txt")
 print(graphM)
 print("\n")
 out = graphM.prim(0)
