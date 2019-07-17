@@ -2,7 +2,7 @@ import random
 import re
 
 
-class GraphList:
+class Graph:
     def __init__(self, vertex):
         self.vertex = vertex
         self.list = []
@@ -81,8 +81,8 @@ class GraphList:
         return sort
 
 
-graphL = GraphList(10)
-graphL.randomFill(70)
-graphL.fromFile("TopologicalSortData.txt")
-print(graphL)
-print(graphL.TS())
+graph = Graph(10)
+graph.randomFill(70)
+graph.fromFile("TopologicalSortData.txt")
+print(graph)
+print(graph.TS())
