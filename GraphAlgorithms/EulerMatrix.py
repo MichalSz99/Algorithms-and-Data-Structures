@@ -2,7 +2,7 @@ import random
 import re
 
 
-class GraphM:
+class Graph:
     def __init__(self, vertex):
         self.vertex = vertex
         self.matrix = []
@@ -90,7 +90,7 @@ class GraphM:
             return False
 
 
-graph = GraphM(10)
+graph = Graph(10)
 graph.randomFill(70)
 graph.fromFile("data.txt")
 print(graph)
