@@ -15,7 +15,7 @@ class Graph:
         out = ""
         for i in range(self.vertex):
             pom = ""
-            for j in range(len(self.matrix)):
+            for j in range(self.matrix):
                 pom = pom + str(self.matrix[i][j]) + " "
             out = out + "\n" + pom
         return out
