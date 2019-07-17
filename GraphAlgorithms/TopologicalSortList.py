@@ -82,7 +82,7 @@ class GraphList:
 
 
 graphL = GraphList(10)
+graphL.randomFill(70)
 graphL.fromFile("TopologicalSortData.txt")
-graphL.randomFill(50)
 print(graphL)
 print(graphL.TS())
