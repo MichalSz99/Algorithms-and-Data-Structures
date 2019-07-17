@@ -86,6 +86,9 @@ class Graph:
 
 graph = Graph(10)
 graph.randomFill(30)
+print(graph)
+print("\n")
+print(graph.Hamilton(0))
 graph.fromFile("HamiltonData.txt")
 print(graph)
 print("\n")
