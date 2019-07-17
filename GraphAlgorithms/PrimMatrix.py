@@ -17,7 +17,7 @@ class Edge:
         return out
 
 
-class GraphM:
+class Graph:
 
     def __init__(self, vertex):
         self.vertex = vertex
@@ -92,7 +92,7 @@ class GraphM:
                     heapq.heappush(processedEdge, Edge(currentEdge.y, i, self.matrix[currentEdge.y][i]))
         return outEdge
 
-graphM = GraphM(10)
+graphM = Graph(10)
 graphM.randomFill(70, 1, 1000)
 graphM.fromFile("PrimData.txt")
 print(graphM)
