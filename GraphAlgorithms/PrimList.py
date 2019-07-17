@@ -110,11 +110,11 @@ class Graph:
         return outEdge
 
 
-graphL = Graph(10)
-graphL.randomFill(70, 1, 1000)
-graphL.fromFile("PrimData.txt")
-print(graphL)
+graph = Graph(10)
+graph.randomFill(70, 1, 1000)
+graph.fromFile("PrimData.txt")
+print(graph)
 print("\n")
-out = graphL.prim(0)
+out = graph.prim(0)
 for i in out:
     print(i)
