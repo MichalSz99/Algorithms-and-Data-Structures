@@ -92,11 +92,11 @@ class Graph:
                     heapq.heappush(processedEdge, Edge(currentEdge.y, i, self.matrix[currentEdge.y][i]))
         return outEdge
 
-graphM = Graph(10)
-graphM.randomFill(70, 1, 1000)
-graphM.fromFile("PrimData.txt")
-print(graphM)
+graph = Graph(10)
+graph.randomFill(70, 1, 1000)
+graph.fromFile("PrimData.txt")
+print(graph)
 print("\n")
-out = graphM.prim(0)
+out = graph.prim(0)
 for i in out:
     print(i)
