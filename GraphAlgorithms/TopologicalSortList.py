@@ -66,18 +66,18 @@ class GraphList:
             if full:
                 return i
 
-    def __TS(self, visited, sort, vertex):  # Topological Sort
+    def __TS(self, visited, sort, vertex):  
         visited[vertex] = 1
         for i in range(len(self.list[vertex])):
             if visited[self.list[vertex][i]] == 0:
-                self._TS(visited, sort, self.list[vertex][i])
+                self.__TS(visited, sort, self.list[vertex][i])
         sort.insert(0, vertex)
 
     def TS(self):
-        start = self.start()
+        start = self.__start()
         visited = [0] * self.vertex
         sort = []
-        self._TS(visited, sort, start)
+        self.__TS(visited, sort, start)
         return sort
 
 
