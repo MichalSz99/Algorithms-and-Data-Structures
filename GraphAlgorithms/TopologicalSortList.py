@@ -83,6 +83,9 @@ class Graph:
 
 graph = Graph(10)
 graph.randomFill(70)
+print(graph)
+print(graph.TS())
 graph.fromFile("TopologicalSortData.txt")
 print(graph)
 print(graph.TS())
+ 
