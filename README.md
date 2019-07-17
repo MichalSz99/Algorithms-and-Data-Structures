@@ -5,12 +5,12 @@ Algorithms and Data Structures in Python and C++
 - Sorted Linked List
 - Binary Search Tree (BST)
 
-## Graph Algorithms in Python
-- Prime's Algorithm (graph representation: Adjacency Matrix and Adjacency List)
-- Dijkstra's Algorithm (graph representation: Adjacency List)
-- Topological Sort (graph representation: Adjacency Matrix and Adjacency List)
-- Algorithm finding Eulerian cycle (graph representation: Adjacency Matrix)
-- Algorithm finding Hamiltonian cycle (graph representation: Adjacency Matrix)
+## Graph Algorithms in Python (graph representation: Adjacency Matrix and Adjacency List)
+- Prime's Algorithm 
+- Topological Sort 
+- Algorithm finding Eulerian cycle 
+- Algorithm finding Hamiltonian cycle 
+- Dijkstra's Algorithm (C++, only Adjacency List)
 
 ## Sorting Algorithms in Python
 - Heap Sort
