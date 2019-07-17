@@ -79,21 +79,20 @@ class GraphM:
                 heapq.heappush(processedEdge, Edge(start, i, self.matrix[start][i]))
         while len(outEdge) < self.vertex - 1:
             while processedEdge:
-                E = heapq.heappop(processedEdge)
-                if not (listOfVertex[E.y]):
+                currentEdge = heapq.heappop(processedEdge)
+                if not (listOfVertex[currentEdge.y]):
                     break
 
             if not processedEdge:
                 break
 
-            listOfVertex[E.y] = True
-            outEdge.append(E)
+            listOfVertex[currentEdge.y] = True
+            outEdge.append(currentEdge)
 
             for i in range(len(self.matrix)):
-                if not (listOfVertex[i]) and self.matrix[E.y][i] != 0:
-                    heapq.heappush(processedEdge, Edge(E.y, i, self.matrix[E.y][i]))
+                if not (listOfVertex[i]) and self.matrix[currentEdge.y][i] != 0:
+                    heapq.heappush(processedEdge, Edge(currentEdge.y, i, self.matrix[currentEdge.y][i]))
         return outEdge
-
 
 graphM = GraphM(10)
 graphM.randomFill(70, 1, 1000)
