@@ -112,6 +112,11 @@ class Graph:
 
 graph = Graph(10)
 graph.randomFill(70, 1, 1000)
+print(graph)
+print("\n")
+out = graph.prim(0)
+for i in out:
+    print(i)
 graph.fromFile("PrimData.txt")
 print(graph)
 print("\n")
