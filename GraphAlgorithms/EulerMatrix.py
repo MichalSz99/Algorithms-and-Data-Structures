@@ -13,9 +13,9 @@ class Graph:
 
     def __str__(self):
         out = ""
-        for i in range(len(self.matrix)):
+        for i in range(self.vertex):
             pom = ""
-            for j in range(len(self.matrix)):
+            for j in range(self.vertex):
                 pom = pom + str(self.matrix[i][j]) + " "
             out = out + "\n" + pom
         return out
