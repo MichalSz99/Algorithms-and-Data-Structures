@@ -44,7 +44,6 @@ class GraphM:
     def randomFill(self, density, valueMin, valueMax):
         self.clear()
         MAXedge = round(self.vertex * (self.vertex - 1) * (density / 100))
-        print(MAXedge)
         count = 0
         while count < MAXedge:
             value = random.randint(valueMin, valueMax)
