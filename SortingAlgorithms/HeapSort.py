@@ -1,29 +1,33 @@
-def HeapSort (A):
-    BuildHeap(A)
-    heapsize = len(A)
-    for i in range(len(A)-1, 0, -1):
-        A[0], A[i] = A[i], A[0]
-        heapsize -=1
-        Heapify(A, 0, heapsize)
-    return A
+def heap_sort(arr):
+    build_heap(arr)
+    heap_size = len(arr)
+    for i in range(len(arr)-1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heap_size -= 1
+        heapify(arr, 0, heap_size)
+    return arr
 
-def BuildHeap(A):
-    heapsize = len(A)
-    for i in range ((len(A)//2),-1,-1):
-        Heapify(A, i, heapsize)
 
-def Heapify(A, i, heapsize):
-    l = 2*i+1
-    r = 2*i+2
-    if( l < heapsize) and (A[l]> A[i]):
-        largest = l
+def build_heap(arr):
+    heap_size = len(arr)
+    for i in range((len(arr)//2), -1, -1):
+        heapify(arr, i, heap_size)
+
+
+def heapify(arr, i, heap_size):
+    left = 2*i+1
+    right = 2*i+2
+    if(left < heap_size) and (arr[left] > arr[i]):
+        largest = left
     else:
         largest = i
-    if (r < heapsize) and (A[r] > A[largest]):
-        largest = r
+    if (right < heap_size) and (arr[right] > arr[largest]):
+        largest = right
     if largest != i:
-        A[largest], A[i] = A[i], A[largest]
-        Heapify(A, largest, heapsize)
+        arr[largest], arr[i] = arr[i], arr[largest]
+        heapify(arr, largest, heap_size)
 
-Tablica = [1, 4, 6, 4, 7, 36, 346, 3, 57, 34, -503, 37]
-print(HeapSort(Tablica))
+
+arr = [1, 4, 6, 4, 7, 36, 346, 3, 57, 34, -503, 37]
+print(heap_sort(arr))
+ 
