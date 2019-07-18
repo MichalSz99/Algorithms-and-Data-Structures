@@ -82,7 +82,7 @@ class Knapsack:
             current_col = self.columns
         if self.matrix[current_row][current_col] != 0:
             current_max = -1
-            while self.matrix[current_row][current_col] >= current_max and current_row != 0:
+            while self.matrix[current_row][current_col] >= current_max:
                 current_max = self.matrix[current_row][current_col]
                 current_row -= 1
             result = self.search(current_row, current_col - self.object_list[current_row].weight)
