@@ -80,16 +80,19 @@ class Knapsack:
             current_row = self.rows
         if current_col is None:
             current_col = self.columns
-        current_max = -1
-        while self.matrix[current_row][current_col] >= current_max and current_row != 0:
-            current_max = self.matrix[current_row][current_col]
-            current_row -= 1
-        if current_row > 0 and current_col - self.object_list[current_row].weight > 0:
-            result = self.search(current_row, current_col - self.object_list[current_row].weight)
-            result.append(self.object_list[current_row].number)
+        if self.matrix[current_row][current_col] != 0:
+            current_max = -1
+            while self.matrix[current_row][current_col] >= current_max and current_row != 0:
+                current_max = self.matrix[current_row][current_col]
+                current_row -= 1
+            if current_row > 0 and current_col - self.object_list[current_row].weight >= 0:
+                result = self.search(current_row, current_col - self.object_list[current_row].weight)
+                result.append(self.object_list[current_row].number)
+            else:
+                result = [self.object_list[current_row].number]
+            return result
         else:
-            result = [self.object_list[current_row].number]
-        return result
+            return []
 
     def show_items(self, items=None):
         if items is None:
@@ -110,4 +113,3 @@ matrix.fill()
 print(matrix)
 print("Numbers of items in Knapsack: " + str(matrix.search()))
 matrix.show_items()
- 
