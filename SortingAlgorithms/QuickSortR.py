@@ -1,26 +1,30 @@
 import random
 
-def QuickSort(A):
-    QuickSortMain(A,0,len(A)-1)
-    return A
 
-def QuickSortMain(A, l, r):
+def quick_sort(arr):
+    quick_sort_main(arr, 0, len(arr)-1)
+    return arr
+
+
+def quick_sort_main(arr, l, r):
     if l < r:
-        pivot = Partition(A, l, r)
-        QuickSortMain(A, l, pivot-1)
-        QuickSortMain(A, pivot+1, r)
+        pivot = partition(arr, l, r)
+        quick_sort_main(arr, l, pivot-1)
+        quick_sort_main(arr, pivot+1, r)
 
-def Partition (A, l, r):
-    x = random.randint(l,r)
-    pivot = A[x]
-    A[r], A[x] = A[x], A[r]
+
+def partition(arr, l, r):
+    x = random.randint(l, r)
+    pivot = arr[x]
+    arr[r], arr[x] = arr[x], arr[r]
     i = l
-    for j in range(l,r):
-        if A[j] <= pivot:
-            A[i], A[j] = A[j], A[i]
-            i +=1
-    A[i], A[r] = A[r], A[i]
+    for j in range(l, r):
+        if arr[j] <= pivot:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+    arr[i], arr[r] = arr[r], arr[i]
     return i
 
-Tablica = [1, 4, 6, 7,-60, 36, 346, 3, 57, 34, -503, 37,1]
-print(QuickSort(Tablica))
+
+array = [1, 4, 6, 7, -60, 36, 346, 3, 57, 34, -503, 37, 1]
+print(quick_sort(array))
