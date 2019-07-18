@@ -22,18 +22,18 @@ class Graph:
         for i in range(self.vertex):
             self.list[i] = []
 
-    def randomFill(self, density):
+    def random_fill(self, density):
         self.clear()
-        MAXedge = round(self.vertex * (self.vertex - 1) * (density / 100))
-        listOfVertex= list(range(self.vertex))
-        random.shuffle(listOfVertex)
+        max_edge = round(self.vertex * (self.vertex - 1) * (density / 100))
+        list_of_vertex = list(range(self.vertex))
+        random.shuffle(list_of_vertex)
         for i in range(self.vertex - 1):
-            self.list[listOfVertex[i]].append(listOfVertex[i+1])
-            self.list[listOfVertex[i+1]].append(listOfVertex[i])
-        self.list[listOfVertex[0]].append(listOfVertex[-1])
-        self.list[listOfVertex[-1]].append(listOfVertex[0])
+            self.list[list_of_vertex[i]].append(list_of_vertex[i+1])
+            self.list[list_of_vertex[i+1]].append(list_of_vertex[i])
+        self.list[list_of_vertex[0]].append(list_of_vertex[-1])
+        self.list[list_of_vertex[-1]].append(list_of_vertex[0])
         count = 2 * self.vertex
-        while count < MAXedge:
+        while count < max_edge:
             x = random.randint(0, self.vertex - 1)
             y = random.randint(0, self.vertex - 1)
             if x == y or y in self.list[x]:
@@ -45,46 +45,46 @@ class Graph:
         for i in range(self.vertex):
             random.shuffle(self.list[i])
 
-    def fromFile(self, fileName):
+    def from_file(self, file_name):
         self.clear()
-        file = open(fileName, "r")
-        input = file.read()
-        vertex = re.findall(r"\d+", input)
-        for i in range(0, len(vertex), 2):
-            predecessor = int(vertex[i])
-            successor = int(vertex[i + 1])
+        file = open(file_name, "r")
+        input_data = file.read()
+        data = re.findall(r"\d+", input_data)
+        for i in range(0, len(data), 2):
+            predecessor = int(data[i])
+            successor = int(data[i + 1])
             self.list[predecessor].append(successor)
             self.list[successor].append(predecessor)
 
-    def __Hamilton(self, out, startVertex, currentVertex, end):
+    def __hamilton(self, out, start_vertex, current_vertex, end):
         if not end:
-            for i in range(len(self.list[currentVertex])):
-                successor = self.list[currentVertex][i]
+            for i in range(len(self.list[current_vertex])):
+                successor = self.list[current_vertex][i]
                 if not (successor in out):
                     out.append(successor)
-                    out, end = self.__Hamilton(out, startVertex, successor, end)
+                    out, end = self.__hamilton(out, start_vertex, successor, end)
                     if end:
                         return out, end
-            if len(out) == self.vertex and startVertex in self.list[currentVertex]:
-                out.append(startVertex)
+            if len(out) == self.vertex and start_vertex in self.list[current_vertex]:
+                out.append(start_vertex)
                 end = True
             else:
                 out.pop()
         return out, end
 
-    def Hamilton(self, startVertex):
-        out = [startVertex]
+    def hamilton(self, start_vertex):
+        out = [start_vertex]
         end = False
-        out, end = self.__Hamilton(out, startVertex, startVertex, end)
+        out, end = self.__hamilton(out, start_vertex, start_vertex, end)
         return out
 
 
 graph = Graph(10)
-graph.randomFill(30)
+graph.random_fill(30)
 print(graph)
 print("\n")
-print(graph.Hamilton(0))
-graph.fromFile("HamiltonData.txt")
+print(graph.hamilton(0))
+graph.from_file("HamiltonData.txt")
 print(graph)
 print("\n")
-print(graph.Hamilton(0))
+print(graph.hamilton(0))
