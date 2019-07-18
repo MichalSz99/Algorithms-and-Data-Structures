@@ -1,30 +1,33 @@
-def MergeSort(A):
-    B = [0] * len(A)
-    A = MergeSortIn(A, 0, len(A) - 1, B)
-    return A
+def merge_sort(arr):
+    temp = [0] * len(arr)
+    arr = merge_sort_in(arr, temp, 0, len(arr) - 1)
+    return arr
 
-def Merge (A, B,first, med, last):
+
+def merge(arr, temp, first, med, last):
     i = first
-    j = med +1
+    j = med + 1
     for k in range(first, last + 1):
-        if ((i <= med) and (j > last)) or (((i <= med) and (j <= last)) and (A[i] <= A[j])):
-            B[k] = A[i]
+        if ((i <= med) and (j > last)) or (((i <= med) and (j <= last)) and (arr[i] <= arr[j])):
+            temp[k] = arr[i]
             i += 1
         else:
-            B[k] = A[j]
+            temp[k] = arr[j]
             j += 1
     for k in range(first, last + 1):
-        A[k] = B[k]
-    return A
+        arr[k] = temp[k]
+    return arr
 
-def MergeSort(A, first, last, B):
+
+def merge_sort_in(arr, temp, first, last):
     med = (first + last) // 2
     if (med - first) > 0:
-        MergeSortIn(A, first, med, B)
+        merge_sort_in(arr, temp, first, med)
     if (last - med) > 0:
-        MergeSortIn(A, med + 1, last, B)
-    Merge(A, B, first, med, last)
-    return A
+        merge_sort_in(arr, temp, med + 1, last)
+    merge(arr, temp, first, med, last)
+    return arr
 
-Tablica = [1, 4, 6, 4, 7, 36, 346, 3, 57, 34, -50, 37]
-print(MergeSortMain(Tablica))
+
+array = [1, 4, 6, 4, 7, 36, 346, 3, 57, 34, -50, 37]
+print(merge_sort(array))
