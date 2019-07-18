@@ -62,6 +62,7 @@ class Knapsack:
             self.rows += 1
 
     def fill(self):
+        self.matrix = []
         for i in range(self.rows+1):
             self.matrix.append([])
             for j in range(self.columns+1):
