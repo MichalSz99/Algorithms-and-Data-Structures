@@ -13,8 +13,8 @@ class Edge:
         return self.val < other.val
 
     def __str__(self):
-        out = "[(" + str(self.x) + "," + str(self.y) + ");" + str(self.val) + "]"
-        return out
+        str_edge = "[(" + str(self.x) + "," + str(self.y) + ");" + str(self.val) + "]"
+        return str_edge
 
 
 class Graph:
@@ -32,7 +32,7 @@ class Graph:
         for i in range(self.vertex):
             pom = ""
             for j in range(self.vertex):
-                pom = pom + '{:>4}'.format(str(self.matrix[i][j]) )+ " "
+                pom = pom + '{:>4}'.format(str(self.matrix[i][j])) + " "
             out = out + "\n" + pom
         return out
 
@@ -41,12 +41,12 @@ class Graph:
             for j in range(self.vertex):
                 self.matrix[i][j] = 0
 
-    def randomFill(self, density, valueMin, valueMax):
+    def random_fill(self, density, value_min, value_max):
         self.clear()
-        MAXedge = round(self.vertex * (self.vertex - 1) * (density / 100))
+        max_edge = round(self.vertex * (self.vertex - 1) * (density / 100))
         count = 0
-        while count < MAXedge:
-            value = random.randint(valueMin, valueMax)
+        while count < max_edge:
+            value = random.randint(value_min, value_max)
             predecessor = random.randint(0, self.vertex - 1)
             successor = random.randint(0, self.vertex - 1)
             if self.matrix[predecessor][successor] != 0 or predecessor == successor:
@@ -55,54 +55,54 @@ class Graph:
             self.matrix[successor][predecessor] = value
             count += 2
 
-    def fromFile(self, fileName):
+    def from_file(self, file_name):
         self.clear()
-        file = open(fileName, "r")
-        input = file.read()
-        vertex = re.findall(r"\d+", input)
-        for i in range(0, len(vertex), 3):
-            predecessor = int(vertex[i])
-            successor = int(vertex[i + 1])
-            value = int(vertex[i + 2])
+        file = open(file_name, "r")
+        input_data = file.read()
+        data = re.findall(r"\d+", input_data)
+        for i in range(0, len(data), 3):
+            predecessor = int(data[i])
+            successor = int(data[i + 1])
+            value = int(data[i + 2])
             self.matrix[predecessor][successor] = value
             self.matrix[successor][predecessor] = value
 
     def prim(self, start):
-        listOfVertex = [False] * self.vertex
-        listOfVertex[start] = True
-        outEdge = []
-        processedEdge = []
+        list_of_vertex = [False] * self.vertex
+        list_of_vertex[start] = True
+        out_edge = []
+        processed_edge = []
         for i in range(self.vertex):
             if self.matrix[start][i] != 0:
-                heapq.heappush(processedEdge, Edge(start, i, self.matrix[start][i]))
-        while len(outEdge) < self.vertex - 1:
-            while processedEdge:
-                currentEdge = heapq.heappop(processedEdge)
-                if not (listOfVertex[currentEdge.y]):
+                heapq.heappush(processed_edge, Edge(start, i, self.matrix[start][i]))
+        while len(out_edge) < self.vertex - 1:
+            while processed_edge:
+                current_edge = heapq.heappop(processed_edge)
+                if not (list_of_vertex[current_edge.y]):
                     break
 
-            if not processedEdge:
+            if not processed_edge:
                 break
 
-            listOfVertex[currentEdge.y] = True
-            outEdge.append(currentEdge)
+            list_of_vertex[current_edge.y] = True
+            out_edge.append(current_edge)
 
             for i in range(len(self.matrix)):
-                if not (listOfVertex[i]) and self.matrix[currentEdge.y][i] != 0:
-                    heapq.heappush(processedEdge, Edge(currentEdge.y, i, self.matrix[currentEdge.y][i]))
-        return outEdge
+                if not (list_of_vertex[i]) and self.matrix[current_edge.y][i] != 0:
+                    heapq.heappush(processed_edge, Edge(current_edge.y, i, self.matrix[current_edge.y][i]))
+        return out_edge
+
 
 graph = Graph(10)
-graph.randomFill(70, 1, 1000)
+graph.random_fill(70, 1, 1000)
 print(graph)
 print("\n")
-out = graph.prim(0)
-for i in out:
+result = graph.prim(0)
+for i in result:
     print(i)
-graph.fromFile("PrimData.txt")
+graph.from_file("PrimData.txt")
 print(graph)
 print("\n")
-out = graph.prim(0)
-for i in out:
+result = graph.prim(0)
+for i in result:
     print(i)
- 
