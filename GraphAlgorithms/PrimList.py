@@ -2,14 +2,15 @@ import random
 import heapq
 import re
 
-class dEdge:
+
+class DEdge:
     def __init__(self, y, val):
         self.val = val
         self.y = y
 
     def __str__(self):
-        out = "[(" + str(self.y) + ");" + str(self.val) + "]"
-        return out
+        str_edge = "[(" + str(self.y) + ");" + str(self.val) + "]"
+        return str_edge
 
     def __lt__(self, other):
         return self.val < other.val
@@ -25,8 +26,8 @@ class Edge:
         return self.val < other.val
 
     def __str__(self):
-        out = "[(" + str(self.x) + "," + str(self.y) + ");" + str(self.val) + "]"
-        return out
+        str_edge = "[(" + str(self.x) + "," + str(self.y) + ");" + str(self.val) + "]"
+        return str_edge
 
 
 class Graph:
@@ -51,13 +52,13 @@ class Graph:
         for i in range(self.vertex):
             self.list[i] = []
 
-    def randomFill(self, density, valueMin, valueMax):
+    def random_fill(self, density, value_min, value_max):
         self.clear()
-        MAXedge = round(self.vertex * (self.vertex - 1) * (density / 100))
+        max_edge = round(self.vertex * (self.vertex - 1) * (density / 100))
         count = 0
-        while count < MAXedge:
+        while count < max_edge:
             repeat = False
-            value = random.randint(valueMin, valueMax)
+            value = random.randint(value_min, value_max)
             predecessor = random.randint(0, self.vertex - 1)
             successor = random.randint(0, self.vertex - 1)
             if predecessor == successor:
@@ -68,59 +69,58 @@ class Graph:
                     break
             if repeat:
                 continue
-            self.list[predecessor].append(dEdge(successor, value))
-            self.list[successor].append(dEdge(predecessor, value))
+            self.list[predecessor].append(DEdge(successor, value))
+            self.list[successor].append(DEdge(predecessor, value))
             count += 2
 
-    def fromFile(self, fileName):
+    def from_file(self, file_name):
         self.clear()
-        file = open(fileName, "r")
-        input = file.read()
-        vertex = re.findall(r"\d+", input)
-        for i in range(0, len(vertex), 3):
-            predecessor = int(vertex[i])
-            successor = int(vertex[i+1])
-            value = int(vertex[i + 2])
-            self.list[predecessor].append(dEdge(successor, value))
-            self.list[successor].append(dEdge(predecessor, value))
+        file = open(file_name, "r")
+        input_data = file.read()
+        data = re.findall(r"\d+", input_data)
+        for i in range(0, len(data), 3):
+            predecessor = int(data[i])
+            successor = int(data[i+1])
+            value = int(data[i + 2])
+            self.list[predecessor].append(DEdge(successor, value))
+            self.list[successor].append(DEdge(predecessor, value))
 
     def prim(self, start):
-        listOfVertex = [False] * self.vertex
-        listOfVertex[start] = True
-        outEdge = []
-        processedEdge = []
+        list_of_vertex = [False] * self.vertex
+        list_of_vertex[start] = True
+        out_edge = []
+        processed_edge = []
         for i in range(len(self.list[start])):
-            heapq.heappush(processedEdge, Edge(start, self.list[start][i].y, self.list[start][i].val))
-        while len(outEdge) < self.vertex - 1:
-            while processedEdge:
-                currentEdge = heapq.heappop(processedEdge)
-                if not (listOfVertex[currentEdge.y]):
+            heapq.heappush(processed_edge, Edge(start, self.list[start][i].y, self.list[start][i].val))
+        while len(out_edge) < self.vertex - 1:
+            while processed_edge:
+                current_edge = heapq.heappop(processed_edge)
+                if not (list_of_vertex[current_edge.y]):
                     break
 
-            if not processedEdge:
+            if not processed_edge:
                 break
 
-            listOfVertex[currentEdge.y] = True
-            outEdge.append(currentEdge)
+            list_of_vertex[current_edge.y] = True
+            out_edge.append(current_edge)
 
-            for i in range(len(self.list[currentEdge.y])):
-                if not (listOfVertex[self.list[currentEdge.y][i].y]):
-                    heapq.heappush(processedEdge, Edge(currentEdge.y, self.list[currentEdge.y][i].y,
-                                                       self.list[currentEdge.y][i].val))
-        return outEdge
+            for i in range(len(self.list[current_edge.y])):
+                if not (list_of_vertex[self.list[current_edge.y][i].y]):
+                    heapq.heappush(processed_edge, Edge(current_edge.y, self.list[current_edge.y][i].y,
+                                   self.list[current_edge.y][i].val))
+        return out_edge
 
 
 graph = Graph(10)
-graph.randomFill(70, 1, 1000)
+graph.random_fill(70, 1, 1000)
 print(graph)
 print("\n")
-out = graph.prim(0)
-for i in out:
-    print(i)
-graph.fromFile("PrimData.txt")
+result = graph.prim(0)
+for k in result:
+    print(k)
+graph.from_file("PrimData.txt")
 print(graph)
 print("\n")
-out = graph.prim(0)
-for i in out:
-    print(i)
- 
+result = graph.prim(0)
+for k in result:
+    print(k)
