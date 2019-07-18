@@ -28,6 +28,6 @@ def heapify(arr, i, heap_size):
         heapify(arr, largest, heap_size)
 
 
-arr = [1, 4, 6, 4, 7, 36, 346, 3, 57, 34, -503, 37]
-print(heap_sort(arr))
+array = [1, 4, 6, 4, 7, 36, 346, 3, 57, 34, -503, 37]
+print(heap_sort(array))
  
