@@ -116,11 +116,11 @@ graph.random_fill(70, 1, 1000)
 print(graph)
 print("\n")
 result = graph.prim(0)
-for k in result:
-    print(k)
+for i in result:
+    print(i)
 graph.from_file("PrimData.txt")
 print(graph)
 print("\n")
 result = graph.prim(0)
-for k in result:
-    print(k)
+for i in result:
+    print(i)
