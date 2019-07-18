@@ -23,7 +23,7 @@ class Graph:
         for i in range(self.vertex):
             self.list[i] = []
 
-    def randomFill(self, density):
+    def random_fill(self, density):
         self.clear()
         matrix = []
         for i in range(self.vertex):
@@ -46,14 +46,14 @@ class Graph:
                 if matrix[i][j] == 1:
                     self.list[i].append(j)
 
-    def fromFile(self, fileName):
+    def from_file(self, file_name):
         self.clear()
-        file = open(fileName, "r")
-        input = file.read()
-        vertex = re.findall(r"\d+", input)
-        for i in range(0, len(vertex), 2):
-            predecessor = int(vertex[i])
-            successor = int(vertex[i+1])
+        file = open(file_name, "r")
+        input_data = file.read()
+        data = re.findall(r"\d+", input_data)
+        for i in range(0, len(data), 2):
+            predecessor = int(data[i])
+            successor = int(data[i+1])
             self.list[predecessor].append(successor)
 
     def __start(self):
@@ -66,26 +66,25 @@ class Graph:
             if full:
                 return i
 
-    def __TS(self, visited, sort, vertex):  
+    def __ts(self, visited, sort, vertex):
         visited[vertex] = 1
         for i in range(len(self.list[vertex])):
             if visited[self.list[vertex][i]] == 0:
-                self.__TS(visited, sort, self.list[vertex][i])
+                self.__ts(visited, sort, self.list[vertex][i])
         sort.insert(0, vertex)
 
-    def TS(self):
+    def ts(self):
         start = self.__start()
         visited = [0] * self.vertex
         sort = []
-        self.__TS(visited, sort, start)
+        self.__ts(visited, sort, start)
         return sort
 
 
 graph = Graph(10)
-graph.randomFill(70)
+graph.random_fill(70)
 print(graph)
-print(graph.TS())
-graph.fromFile("TopologicalSortData.txt")
+print(graph.ts())
+graph.from_file("TopologicalSortData.txt")
 print(graph)
-print(graph.TS())
- 
+print(graph.ts())
