@@ -26,7 +26,7 @@ class Graph:
             for j in range(self.vertex):
                 self.matrix[i][j] = 0
 
-    def randomFill(self, density):
+    def random_fill(self, density):
         self.clear()
         for i in range(self.vertex):
             for j in range(i + 1, self.vertex):
@@ -40,14 +40,14 @@ class Graph:
                 for j in range(self.vertex):
                     self.matrix[j][x], self.matrix[j][y] = self.matrix[j][y], self.matrix[j][x]
 
-    def fromFile(self, fileName):
+    def from_file(self, file_name):
         self.clear()
-        file = open(fileName, "r")
-        input = file.read()
-        vertex = re.findall(r"\d+", input)
-        for i in range(0, len(vertex), 2):
-            predecessor = int(vertex[i])
-            successor = int(vertex[i+1])
+        file = open(file_name, "r")
+        input_data = file.read()
+        data = re.findall(r"\d+", input_data)
+        for i in range(0, len(data), 2):
+            predecessor = int(data[i])
+            successor = int(data[i+1])
             self.matrix[predecessor][successor] = 1
 
     def __start(self):
@@ -60,26 +60,25 @@ class Graph:
             if full:
                 return i
 
-    def __TS(self, visited, sort, currentVertex): 
-        visited[currentVertex] = 1
+    def __ts(self, visited, sort, current_vertex):
+        visited[current_vertex] = 1
         for i in range(self.vertex):
-            if visited[i] == 0 and self.matrix[currentVertex][i] != 0:
-                self.__TS(visited, sort, i)
-        sort.insert(0, currentVertex)
+            if visited[i] == 0 and self.matrix[current_vertex][i] != 0:
+                self.__ts(visited, sort, i)
+        sort.insert(0, current_vertex)
 
-    def TS(self):
+    def ts(self):
         start = self.__start()
         visited = [0] * self.vertex
         sort = []
-        self.__TS(visited, sort, start)
+        self.__ts(visited, sort, start)
         return sort
 
 
 graph = Graph(10)
-graph.randomFill(70)
+graph.random_fill(70)
 print(graph)
-print(graph.TS())
-graph.fromFile("TopologicalSortData.txt")
+print(graph.ts())
+graph.from_file("TopologicalSortData.txt")
 print(graph)
-print(graph.TS())
- 
+print(graph.ts())
