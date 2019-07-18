@@ -28,3 +28,4 @@ def partition(arr, l, r):
 
 array = [1, 4, 6, 7, -60, 36, 346, 3, 57, 34, -503, 37, 1]
 print(quick_sort(array))
+ 
