@@ -2,6 +2,7 @@ import random
 import re
 import copy
 
+
 class Graph:
     def __init__(self, vertex):
         self.vertex = vertex
@@ -20,13 +21,13 @@ class Graph:
 
     def clear(self):
         for i in range(self.vertex):
-                self.list[i] =[]
+            self.list[i] = []
 
-    def randomFill(self, density):
+    def random_fill(self, density):
         self.clear()
-        MAXedge = round(self.vertex * (self.vertex - 1) * (density / 100))
+        max_edge = round(self.vertex * (self.vertex - 1) * (density / 100))
         count = 0
-        while count < MAXedge:
+        while count < max_edge:
             x = random.randint(0, self.vertex - 1)
             y = random.randint(0, self.vertex - 1)
             z = random.randint(0, self.vertex - 1)
@@ -41,28 +42,28 @@ class Graph:
                 self.list[y].append(z)
                 count += 6
 
-    def fromFile(self, fileName):
+    def from_file(self, file_name):
         self.clear()
-        file = open(fileName, "r")
-        input = file.read()
-        vertex = re.findall(r"\d+", input)
-        for i in range(0, len(vertex), 2):
-            predecessor = int(vertex[i])
-            successor = int(vertex[i + 1])
+        file = open(file_name, "r")
+        input_data = file.read()
+        data = re.findall(r"\d+", input_data)
+        for i in range(0, len(data), 2):
+            predecessor = int(data[i])
+            successor = int(data[i + 1])
             self.list[predecessor].append(successor)
             self.list[successor].append(predecessor)
 
-    def checkEuler(self):
+    def check_euler(self):
         for i in range(self.vertex):
             if len(self.list[i]) % 2 == 1:
                 return False
         return True
 
-    def Euler(self, startVertex): 
-        if self.checkEuler():
-            copyGraph = copy.copy(self.list)
+    def euler(self, start_vertex):
+        if self.check_euler():
+            copy_graph = copy.copy(self.list)
             out = []
-            stack = [startVertex]
+            stack = [start_vertex]
             while stack:
                 v = stack[-1]
                 is_edge = False
@@ -75,18 +76,18 @@ class Graph:
                     continue
                 stack.pop()
                 out.append(v)
-            self.list = copy.copy(copyGraph)
+            self.list = copy.copy(copy_graph)
             return out
         else:
             return False
 
 
 graph = Graph(10)
-graph.randomFill(30)
+graph.random_fill(30)
 print(graph)
 print("\n")
-print(graph.Euler(0))
-graph.fromFile("EulerData.txt")
+print(graph.euler(0))
+graph.from_file("EulerData.txt")
 print(graph)
 print("\n")
-print(graph.Euler(0))
+print(graph.euler(0))
