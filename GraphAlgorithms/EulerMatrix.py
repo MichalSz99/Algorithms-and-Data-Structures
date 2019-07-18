@@ -25,11 +25,11 @@ class Graph:
             for j in range(self.vertex):
                 self.matrix[i][j] = 0
 
-    def randomFill(self, density):
+    def random_fill(self, density):
         self.clear()
-        MAXedge = round(self.vertex * (self.vertex - 1) * (density / 100))
+        max_edge = round(self.vertex * (self.vertex - 1) * (density / 100))
         count = 0
-        while count < MAXedge:
+        while count < max_edge:
             x = random.randint(0, self.vertex - 1)
             y = random.randint(0, self.vertex - 1)
             z = random.randint(0, self.vertex - 1)
@@ -44,30 +44,30 @@ class Graph:
                 self.matrix[y][z] = 1
                 count += 6
 
-    def fromFile(self, fileName):
+    def from_file(self, file_name):
         self.clear()
-        file = open(fileName, "r")
-        input = file.read()
-        vertex = re.findall(r"\d+", input)
-        for i in range(0, len(vertex), 2):
-            predecessor = int(vertex[i])
-            successor = int(vertex[i + 1])
+        file = open(file_name, "r")
+        input_data = file.read()
+        data = re.findall(r"\d+", input_data)
+        for i in range(0, len(data), 2):
+            predecessor = int(data[i])
+            successor = int(data[i + 1])
             self.matrix[predecessor][successor] = 1
             self.matrix[successor][predecessor] = 1
 
-    def checkEuler(self):
+    def check_euler(self):
         for i in range(self.vertex):
-            sum = 0
+            check_sum = 0
             for j in self.matrix[i]:
-                sum += self.matrix[i][j]
-            if sum % 2 ==1:
+                check_sum += self.matrix[i][j]
+            if check_sum % 2 == 1:
                 return False
         return True
 
-    def Euler(self, startVertex):
-        if self.checkEuler():
+    def euler(self, start_vertex):
+        if self.check_euler():
             out = []
-            stack = [startVertex]
+            stack = [start_vertex]
             while stack:
                 v = stack[-1]
                 is_edge = False
@@ -91,11 +91,11 @@ class Graph:
 
 
 graph = Graph(10)
-graph.randomFill(70)
+graph.random_fill(70)
 print(graph)
 print("\n")
-print(graph.Euler(0))
-graph.fromFile("EulerData.txt")
+print(graph.euler(0))
+graph.from_file("EulerData.txt")
 print(graph)
 print("\n")
-print(graph.Euler(0))
+print(graph.euler(0))
