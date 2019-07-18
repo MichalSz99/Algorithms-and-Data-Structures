@@ -90,13 +90,10 @@ class Knapsack:
                 current_max = self.matrix[current_row][current_col]
                 current_row -= 1
             current_row += 1
-            print(current_col)
             while self.matrix[current_row][current_col] >= current_max:
-                print(current_col, "in while")
                 current_max = self.matrix[current_row][current_col]
                 current_col -= 1
             current_col += 1
-            print(current_row, current_col)
             result = self.search(current_row, current_col - self.object_list[current_row-1].weight)
             result.append(self.object_list[current_row-1].number)
             return result
@@ -117,7 +114,7 @@ matrix.fill()
 print(matrix)
 print("Numbers of items in Knapsack: " + str(matrix.search()))
 matrix.show_items()
-matrix.random_object(10, 1, 10, 1, 10)
+matrix.random_object(10, 2, 10, 5, 10)
 matrix.fill()
 print(matrix)
 print("Numbers of items in Knapsack: " + str(matrix.search()))
