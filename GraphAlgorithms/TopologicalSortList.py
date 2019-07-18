@@ -66,12 +66,12 @@ class Graph:
             if full:
                 return i
 
-    def __ts(self, visited, sort, vertex):
-        visited[vertex] = 1
-        for i in range(len(self.list[vertex])):
-            if visited[self.list[vertex][i]] == 0:
-                self.__ts(visited, sort, self.list[vertex][i])
-        sort.insert(0, vertex)
+    def __ts(self, visited, sort, current_vertex):
+        visited[current_vertex] = 1
+        for i in range(len(self.list[current_vertex])):
+            if visited[self.list[current_vertex][i]] == 0:
+                self.__ts(visited, sort, self.list[current_vertex][i])
+        sort.insert(0, current_vertex)
 
     def ts(self):
         start = self.__start()
