@@ -18,3 +18,7 @@ Algorithms and Data Structures in Python and C++
 - Insert Sort
 - Selection Sort
 - Quick Sort (iteration and recursive version)
+
+## Other Algorithms in Python
+- Solution of 0-1 Knapsack Problem with Dynamic Programming
+- Solution of Unbounded Knapsack Problem with Dynamic Programming
