@@ -49,45 +49,38 @@ class Knapsack:
         self.matrix = []
         self.new_cols = 0
 
+    def __add_from_file(self, file_name):
+        file = open(file_name, "r")
+        file_data = file.read()
+        data = re.findall(r"\d+", file_data)
+        for i in range(0, len(data), 2):
+            weight = int(data[i])
+            value = int(data[i + 1])
+            self.object_list.append(Object(weight, value))
+            self.rows += 1
+            self.new_rows += 1
+
+    def __add_random(self, object_number, min_weight, max_weight, min_value, max_value):
+        for i in range(object_number):
+            weight = random.randint(min_weight, max_weight)
+            value = random.randint(min_value, max_value)
+            self.object_list.append(Object(weight, value))
+            self.rows += 1
+            self.new_rows += 1
+
     def new_from_file(self, file_name):
         self.clear()
-        file = open(file_name, "r")
-        file_data = file.read()
-        data = re.findall(r"\d+", file_data)
-        for i in range(0, len(data), 2):
-            weight = int(data[i])
-            value = int(data[i + 1])
-            self.object_list.append(Object(weight, value))
-            self.rows += 1
-            self.new_rows += 1
+        self.__add_from_file(file_name)
 
     def append_from_file(self, file_name):
-        file = open(file_name, "r")
-        file_data = file.read()
-        data = re.findall(r"\d+", file_data)
-        for i in range(0, len(data), 2):
-            weight = int(data[i])
-            value = int(data[i + 1])
-            self.object_list.append(Object(weight, value))
-            self.rows += 1
-            self.new_rows += 1
+        self.__add_from_file(file_name)
 
-    def new_random_object(self, object_number, min_weight, max_weight, min_value, max_value):
+    def new_random(self, object_number, min_weight, max_weight, min_value, max_value):
         self.clear()
-        for i in range(object_number):
-            weight = random.randint(min_weight, max_weight)
-            value = random.randint(min_value, max_value)
-            self.object_list.append(Object(weight, value))
-            self.rows += 1
-            self.new_rows += 1
+        self.__add_random(object_number, min_weight, max_weight, min_value, max_value)
 
-    def append_random_object(self, object_number, min_weight, max_weight, min_value, max_value):
-        for i in range(object_number):
-            weight = random.randint(min_weight, max_weight)
-            value = random.randint(min_value, max_value)
-            self.object_list.append(Object(weight, value))
-            self.rows += 1
-            self.new_rows += 1
+    def append_random(self, object_number, min_weight, max_weight, min_value, max_value):
+        self.__add_random(object_number, min_weight, max_weight, min_value, max_value)
 
     def set_capacity(self, new_capacity):
         if self.matrix:
@@ -166,7 +159,7 @@ matrix.fill()
 print(matrix)
 print("Numbers of items in Knapsack: " + str(matrix.search()))
 matrix.show_items()
-matrix.append_random_object(10, 2, 10, 5, 10)
+matrix.append_random(10, 2, 10, 5, 10)
 matrix.set_capacity(14)
 matrix.fill()
 print(matrix)
