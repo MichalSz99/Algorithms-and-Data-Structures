@@ -28,7 +28,9 @@ class Knapsack:
         else:
             self.object_list = object_list
         self.rows = len(self.object_list)
+        self.new_rows = self.rows
         self.columns = capacity
+        self.new_cols = capacity
         self.matrix = []
 
     def __str__(self):
@@ -40,9 +42,14 @@ class Knapsack:
             out = out + "\n" + pom
         return out
 
-    def from_file(self, file_name):
+    def clear(self):
         self.object_list = []
         self.rows = 0
+        self.new_rows = 0
+        self.matrix = []
+        self.new_cols = 0
+
+    def __add_from_file(self,file_name):
         file = open(file_name, "r")
         file_data = file.read()
         data = re.findall(r"\d+", file_data)
@@ -51,30 +58,69 @@ class Knapsack:
             value = int(data[i + 1])
             self.object_list.append(Object(weight, value))
             self.rows += 1
+            self.new_rows += 1
 
-    def random_object(self, object_number, min_weight, max_weight, min_value, max_value):
-        self.object_list = []
-        self.rows = 0
+    def __add_random(self, object_number, min_weight, max_weight, min_value, max_value):
         for i in range(object_number):
             weight = random.randint(min_weight, max_weight)
             value = random.randint(min_value, max_value)
             self.object_list.append(Object(weight, value))
             self.rows += 1
+            self.new_rows += 1
+
+    def new_from_file(self, file_name):
+        self.clear()
+        self.__add_from_file(file_name)
+
+    def append_from_file(self, file_name):
+        self.__add_from_file(file_name)
+
+    def new_random(self, object_number, min_weight, max_weight, min_value, max_value):
+        self.clear()
+        self.__add_random(object_number, min_weight, max_weight, min_value, max_value)
+
+    def append_random(self, object_number, min_weight, max_weight, min_value, max_value):
+        self.__add_random(object_number, min_weight, max_weight, min_value, max_value)
+
+    def set_capacity(self, new_capacity):
+        if self.matrix:
+            self.new_cols = new_capacity - self.columns
+        else:
+            self.new_cols = new_capacity
+        self.columns = new_capacity
+
+    def __find_value(self, i, j):
+        if i == 0:
+            self.matrix[i].append(0)
+        elif j == 0:
+            self.matrix[i].append(0)
+        elif j < self.object_list[i - 1].weight:
+            self.matrix[i].append(self.matrix[i - 1][j])
+        else:
+            self.matrix[i].append(max(self.matrix[i - 1][j],
+                                      self.matrix[i - 1][j - self.object_list[i - 1].weight]
+                                      + self.object_list[i - 1].value))
 
     def fill(self):
-        self.matrix = []
-        for i in range(self.rows+1):
-            self.matrix.append([])
-            for j in range(self.columns+1):
-                if i == 0:
-                    self.matrix[i].append(0)
-                elif j == 0:
-                    self.matrix[i].append(0)
-                elif j < self.object_list[i-1].weight:
-                    self.matrix[i].append(self.matrix[i-1][j])
-                else:
-                    self.matrix[i].append(max(self.matrix[i-1][j], self.matrix[i-1][j - self.object_list[i-1].weight]
-                                              + self.object_list[i-1].value))
+        if self.new_rows != 0:
+            if self.rows == self.new_rows:
+                for i in range(self.rows+1):
+                    self.matrix.append([])
+                    for j in range(self.columns - self.new_cols + 1):
+                        self.__find_value(i, j)
+            else:
+                for i in range(self.rows - self.new_rows + 1, self.rows+1):
+                    self.matrix.append([])
+                    for j in range(self.columns - self.new_cols + 1):
+                        self.__find_value(i, j)
+        self.new_rows = 0
+
+        if self.new_cols != 0:
+            for i in range(self.rows + 1):
+                self.matrix.append([])
+                for j in range(self.columns - self.new_cols + 1, self.columns + 1):
+                    self.__find_value(i, j)
+        self.new_cols = 0
 
     def search(self, current_row=None, current_col=None):
         if current_row is None:
@@ -101,12 +147,13 @@ class Knapsack:
 
 
 matrix = Knapsack(10)
-matrix.from_file("KnapsackData.txt")
+matrix.new_from_file("KnapsackData.txt")
 matrix.fill()
 print(matrix)
 print("Numbers of items in Knapsack: " + str(matrix.search()))
 matrix.show_items()
-matrix.random_object(10, 1, 10, 1, 10)
+matrix.append_random(10, 2, 10, 5, 10)
+matrix.set_capacity(14)
 matrix.fill()
 print(matrix)
 print("Numbers of items in Knapsack: " + str(matrix.search()))
